@@ -1,0 +1,68 @@
+CES - SITIO NUEVO, ESTATICO, SIN FRAMEWORK
+============================================
+
+CAMBIO DE ESTRATEGIA: se abandona el repo de TanStack Start / Lovable
+(CES-Centro-de-Especialidades-de-la-Salud en GitHub). Ese repo dio
+demasiados problemas en cadena: preset de Nitro apuntando a Cloudflare
+en vez de Netlify, formato de texto distinto al aprobado, fotos de stock
+con IA presentadas como reales, favicon de Lovable sin corregir.
+
+Se usa en cambio el archivo Index.html que Matias uso realmente en la
+reunion con la clinica - es un archivo AUTOCONTENIDO (HTML+CSS+JS en un
+solo archivo, sin dependencias externas, sin build, sin framework) con:
+  - El diseno y textos EXACTOS que la clinica vio y aprobo
+  - Un widget de reserva de turnos completo y funcional (simulado):
+    elegir especialidad -> dia -> horario -> datos -> confirmacion
+  - El modal de "Acceso personal" funcionando de verdad (abre/cierra)
+  - El logo real de CES ya insertado (embebido en base64, no depende
+    de ningun archivo externo)
+  - Sin fotos de stock/IA de ningun tipo (el archivo nunca las tuvo)
+  - El telefono fijo ya bien formateado
+
+QUE SE LE AGREGO (todo esto faltaba en el archivo original)
+-------------------------------------------------------------
+- Favicon real de CES (antes no tenia ninguno)
+- Meta tags de SEO: description, robots, canonical, theme-color
+- Open Graph completo (title, description, image) para que el link
+  se vea bien al compartirlo por WhatsApp
+- Datos estructurados (JSON-LD tipo MedicalClinic)
+- robots.txt y sitemap.xml
+
+ARCHIVOS DE ESTE PAQUETE
+-------------------------
+index.html          -> la pagina completa (ya con todos los cambios)
+favicon-32.png       -> icono de pestaña
+favicon-512.png      -> icono de alta resolucion
+apple-touch-icon.png -> icono para iOS
+og-image.png         -> imagen que se ve al compartir el link
+robots.txt
+sitemap.xml
+netlify.toml          -> config de Netlify: SIN build command, publica
+                          los archivos directo, evita TODOS los problemas
+                          de Nitro/TanStack que se venian arrastrando
+
+COMO SUBIRLO A GITHUB (nuevo repo, mas simple que el anterior)
+------------------------------------------------------------------
+1. Crear un repo nuevo en GitHub (ej: "ces-web" o similar). No hace
+   falta clonar el viejo de TanStack, este es completamente aparte.
+2. Copiar estos 7 archivos a la raiz del repo.
+3. Commit + push.
+4. En Netlify: "Add new site" -> conectar este repo nuevo.
+   Build settings: dejar el comando de build VACIO (no hace falta
+   ninguno) y "Publish directory" en "." (la raiz). El netlify.toml
+   ya incluido configura esto automaticamente, Netlify deberia
+   detectarlo solo.
+5. Deploy. No deberia fallar nada: no hay build, no hay Nitro, no hay
+   funciones - es HTML/CSS/JS servido tal cual.
+
+PENDIENTE
+----------
+- El dominio "ces.mitsistemas.com.ar" esta como placeholder en el
+  Open Graph, canonical, robots.txt y sitemap.xml. Cuando Lorena
+  confirme el dominio real, buscar y reemplazar ese texto en esos
+  4 lugares.
+- Fotos reales del centro: cuando la clinica las mande, se pueden
+  agregar directamente como <img src="..."> en las secciones que
+  correspondan (Hero, "Por que elegir CES"), no hay ningun placeholder
+  reservado porque el archivo original nunca tuvo fotos - se agregan
+  desde cero cuando lleguen.
