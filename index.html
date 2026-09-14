@@ -90,6 +90,10 @@ h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.08;letter-spac
 .menu{display:flex;gap:30px;font-size:.92rem}
 .menu a{color:var(--tinta);opacity:.78;transition:opacity .18s,color .18s}
 .menu a:hover{opacity:1;color:var(--bordo)}
+.menu-burger{display:none;background:none;border:none;color:var(--bordo);padding:6px;cursor:pointer;flex-shrink:0}
+.menu-mobile{display:none;flex-direction:column;background:#fff;border-top:1px solid var(--borde)}
+.menu-mobile a{padding:16px 28px;color:var(--tinta);border-bottom:1px solid var(--borde);font-size:.95rem}
+.menu-mobile.open{display:flex}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:100px;border:none;cursor:pointer;font-family:var(--sans);font-weight:600;transition:transform .18s,background .18s,box-shadow .18s;text-align:center}
 .btn-pri{background:var(--bordo);color:#fff;padding:13px 26px;font-size:.95rem;box-shadow:var(--sombra-suave)}
 .btn-pri:hover{background:var(--bordo-deep);transform:translateY(-2px)}
@@ -291,6 +295,7 @@ h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.08;letter-spac
   .conf-g{grid-template-columns:1fr 1fr;gap:20px}
   .pie-g{grid-template-columns:1fr;gap:28px}
   .menu{display:none}
+  .menu-burger{display:block}
   .sec,.cta{padding:64px 0}
   .hero{padding:48px 0 64px}
 }
@@ -312,6 +317,15 @@ h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.08;letter-spac
       <a href="#visitar">Visitarnos</a>
     </div>
     <a href="https://sistema.ces.mitsistemas.com.ar/turnos" class="btn btn-pri">Sacar turno</a>
+    <button class="menu-burger" id="menuBurger" aria-label="Abrir menú" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="menu-mobile" id="menuMobile">
+    <a href="#especialidades">Especialidades</a>
+    <a href="#por-que">Por qué CES</a>
+    <a href="#equipo">Equipo</a>
+    <a href="#visitar">Visitarnos</a>
   </div>
 </nav>
 
@@ -648,6 +662,17 @@ h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.08;letter-spac
 
 <script>
 document.getElementById('anio').textContent = new Date().getFullYear();
+
+const burger = document.getElementById('menuBurger');
+const menuMobile = document.getElementById('menuMobile');
+burger.addEventListener('click', () => {
+  const abierto = menuMobile.classList.toggle('open');
+  burger.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+});
+menuMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  menuMobile.classList.remove('open');
+  burger.setAttribute('aria-expanded', 'false');
+}));
 </script>
 </body>
 </html>
